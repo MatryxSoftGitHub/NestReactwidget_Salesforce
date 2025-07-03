@@ -8,8 +8,8 @@
   "scripts": {
     "build": "npm run build:fe && nest build",
     "build:fe": "npm --prefix ../widget-frontend ci && npm --prefix ../widget-frontend run build && rimraf public && copyfiles -u 2 \"../widget-frontend/dist/**/*\" public",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node dist/main.js",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
