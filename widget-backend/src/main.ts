@@ -1,30 +1,21 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { NestExpressApplication } from '@nestjs/platform-express';
+import * as express from 'express';
 import { join } from 'path';
-import helmet from 'helmet';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create(AppModule);
 
-  app.enableCors({ origin: true }); // allow any origin while learning
+  // Serve React static files from widget-backend/public
+  app.use(express.static(join(__dirname, '..', 'public')));
 
-  app.use(
-    helmet({
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: ["'self'"],
-          frameAncestors: ["'self'", '*.lightning.force.com'],
-        },
-      },
-    }),
-  );
-
-  // Serve React build we’ll copy in step ⑤
-  app.useStaticAssets(join(__dirname, '..', 'public'));
+  // Fallback: send index.html for any unknown path (SPA support)
+  app.get('*', (req, res) => {
+    res.sendFile(join(__dirname, '..', 'public', 'index.html'));
+  });
 
   const port = process.env.PORT || 3000;
   await app.listen(port);
-  console.log('🚀  Nest ready at http://localhost:3000');
+  console.log(`App listening on port ${port}`);
 }
 bootstrap();
