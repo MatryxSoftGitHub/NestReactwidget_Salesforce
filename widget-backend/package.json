@@ -6,9 +6,10 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build",
+    "build": "npm run build:fe && nest build",
+    "build:fe": "npm --prefix ../widget-frontend ci && npm --prefix ../widget-frontend run build && rimraf public && copyfiles -u 2 \"../widget-frontend/dist/**/*\" public",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
+    "start": "node dist/main.js",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -53,6 +54,8 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
+    "rimraf": "^5.0.0",
+    "copyfiles": "^2.4.1",
     "typescript-eslint": "^8.20.0"
   },
   "jest": {

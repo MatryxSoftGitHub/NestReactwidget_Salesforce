@@ -23,7 +23,8 @@ async function bootstrap() {
   // Serve React build we’ll copy in step ⑤
   app.useStaticAssets(join(__dirname, '..', 'public'));
 
-  await app.listen(3000);
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
   console.log('🚀  Nest ready at http://localhost:3000');
 }
 bootstrap();
