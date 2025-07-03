@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "npm run build:fe && nest build",
-    "build:fe": "npm --prefix ../widget-frontend ci && npm --prefix ../widget-frontend run build && rimraf public && copyfiles -u 2 \"../widget-frontend/dist/**/*\" public",
+    "build:fe": "npm install --prefix ../widget-frontend --legacy-peer-deps && npm run build --prefix ../widget-frontend && rm -rf public && mkdir public && cp -R ../widget-frontend/dist/* public/ && echo '---- PUBLIC DIR CONTENTS ----' && ls -R public | head",
     "start": "node dist/main.js",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start:dev": "nest start --watch",
